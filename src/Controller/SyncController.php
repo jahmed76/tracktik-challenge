@@ -16,12 +16,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class SyncController extends AbstractController
 {
     private TrackTikService $trackTikService;
-    private EmployeeRepository $employeeRepository;
 
-    public function __construct(TrackTikService $trackTikService, EmployeeRepository $employeeRepository)
+    public function __construct(TrackTikService $trackTikService)
     {
         $this->trackTikService = $trackTikService;
-        $this->employeeRepository = $employeeRepository;
     }
 
     #[Route('/sync/{provider}', name: 'sync', methods:['POST', 'GET'])]
@@ -30,7 +28,7 @@ class SyncController extends AbstractController
         $params = $request->attributes->get('_route_params');
         $provider = $params['provider'] ?? 'provider_a';
         $data = json_decode($request->getContent(), true);
-        // $data  = ['email' => 'est@gmail.com', 'gender' => 'Male', 'first_name' => 'Test', 'last_name' => 'User'];
+        $data  = ['email' => 'est@gmail.com', 'gender' => 'Male', 'first_name' => 'Test', 'last_name' => 'User'];
 
         if ($provider === 'provider_a') {
             $employee = new EmployeeProviderA($data);
