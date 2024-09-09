@@ -65,11 +65,11 @@ class EmployeeProviderA extends Employee
         }
         switch ($this->data['gender']) {
             case 'Male':
-                return Gender::MALE;
+                return Gender::M;
             case 'Female':
-                return Gender::FEMALE;
-            case 'Binary':
-                return Gender::BOTH;
+                return Gender::F;
+            case 'Other':
+                return Gender::B;
         }
         return null;
     }

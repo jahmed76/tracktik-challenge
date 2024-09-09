@@ -3,9 +3,9 @@ namespace App\DTO;
 
 enum Gender: string
 {
-    case MALE = 'M';
-    case FEMALE = 'F';
-    case BOTH = 'B';
+    case M = 'M';
+    case F = 'F';
+    case B = 'B';
     
     public static function isValid(?Gender $value): bool
     {

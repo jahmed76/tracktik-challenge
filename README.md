@@ -11,6 +11,8 @@ This Symfony-based PHP project integrates with TrackTik's API to manage employee
 
 ### Step 1: Setup env
 
+We need to add these env variables in .env file before we can start the app
+
 ```
 TRACKTIK_BASE_URL=https://smoke.staffr.net
 TRACKTIK_OAUTH_CODE_URL=/rest/oauth2/authorize
@@ -19,7 +21,7 @@ TRACKTIK_CLIENT_ID= #Client id from credentials.json file
 TRACKTIK_CLIENT_SECRET= #Client secret from credentials.json file
 TRACKTIK_REFRESH_TOKEN= #Initial refresh token from credentials.json file
 
-
+DATABASE_URL="postgresql://admin:root@host.docker.internal:15432/tracktik_db?serverVersion=16&charset=utf8"
 ```
 
 ### Step 1: Start the Docker Containers
@@ -33,7 +35,7 @@ docker compose up
 This should start the symfony app, postgres and pgadmin.
 
 ### Step 2: Set Up the Database
-Once the containers are running, you need to set up the PostgreSQL database. Use the following commands to create and configure the database schema:
+Once the containers are running, we need to set up the PostgreSQL database. Use the following commands to create and configure the database schema:
 
 1. Create the database:
 
@@ -57,13 +59,52 @@ Description: This endpoint synchronizes employee data from the specified provide
 
 Payload: The payload format differs between `provider_a` and `provider_b`:
 
+Payload for provider_b:
+
+```
+{
+  "first_name": "John",
+  "last_name": "Doe",
+  "email_address": "john.doe@example.com",
+  "phone": "123-456-7890",
+  "position": "Manager",
+  "gender": "Male", // enum: Male, Female, Other
+  "birth_date": "1990-01-01" // yyyy-mm-dd
+}
+```
+
+Payload for provider_b:
+
+```
+{
+  "fname": "John",
+  "lname": "Doe",
+  "contact": {
+    "email": "john.doe@example.com",
+    "address": {
+      "street": "123 Main St",
+      "city": "New York",
+      "zip": "10001"
+    }
+  },
+  "phone": "123-456-7890",
+  "role": "Developer",
+  "sex": "male", // enum: male, female, other
+  "dob": {
+    "year": 1990,
+    "month": 5,
+    "day": 15
+  }
+}
+```
+
 ```
 curl -X POST http://localhost:9080/api/sync/provider_a -H "Content-Type: application/json" -d '{"first_name": "John", "last_name": "Doe", "email": "john.doe@example.com", "gender": "Male"}'
 ```
 
 ## Running Tests
 
-To run the test suite, you need to set up a separate testing database. Use the following commands to create the test database and schema:
+To run the test suite, we need to set up a separate testing database. Use the following commands to create the test database and schema:
 
 1. Create the test database:
 

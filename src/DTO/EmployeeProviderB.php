@@ -60,18 +60,23 @@ class EmployeeProviderB extends Employee
             return null;
         }
         switch ($this->data['sex']) {
-            case 'Male':
-                return Gender::MALE;
-            case 'Female':
-                return Gender::FEMALE;
-            case 'Binary':
-                return Gender::BOTH;
+            case 'male':
+                return Gender::M;
+            case 'female':
+                return Gender::F;
+            case 'other':
+                return Gender::B;
         }
         return null;
     }
 
     public function getBirthday(): ?string
     {
-        return $this->data['dob'] ?? null;
+        $dob = $this->data['dob'] ?? null;
+        if ($dob) {
+            return sprintf("%s-%s-%s", $dob['year'],  $dob['month'],  $dob['day']);
+        }
+
+        return null;
     }
 }
