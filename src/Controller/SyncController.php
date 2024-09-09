@@ -28,7 +28,7 @@ class SyncController extends AbstractController
         $params = $request->attributes->get('_route_params');
         $provider = $params['provider'] ?? 'provider_a';
         $data = json_decode($request->getContent(), true);
-        $data  = ['email' => 'est@gmail.com', 'gender' => 'Male', 'first_name' => 'Test', 'last_name' => 'User'];
+        // $data  = ['email' => 'est@gmail.com', 'gender' => 'Male', 'first_name' => 'Test', 'last_name' => 'User'];
 
         if ($provider === 'provider_a') {
             $employee = new EmployeeProviderA($data);

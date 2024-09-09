@@ -65,8 +65,10 @@ class TrackTikService
         // return new ApiResponse(200, true, '', $employeeData);
         
         $response = $this->httpService->makeRequest('POST', $url, $data, $token);
+        if (!$response->isSuccess()) {
+            return $response;
+        }
         $this->saveEmployee($employee->getProvider(), $response->getData());
-
         return $response;
     }
 
