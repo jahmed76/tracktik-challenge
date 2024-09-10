@@ -51,7 +51,7 @@ class AuthService
             'refresh_token' => $refreshToken,
         ];
 
-        $resp = $this->httpService->makeRequest('POST', $oauth_url, $payload, 'valid_token');
+        $resp = $this->httpService->makeRequest('POST', $oauth_url, $payload, '');
         if (!$resp->isSuccess()) {
             return $resp;
         }

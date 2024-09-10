@@ -2,8 +2,15 @@
 
 namespace App\DTO;
 
+use DateTime;
+
 abstract class Employee
 {
+    const FIRST_NAME_REQUIRED = "First name is required";
+    const LAST_NAME_REQUIRED = "Last name is required";
+    const GENDER_MISMATCH = "Gender format is incorrect";
+    const BIRTHDAY_MISMATCH = "Birthday format is incorrect";
+
     public function getRequiredFields(): array
     {
         return [
@@ -31,11 +38,6 @@ abstract class Employee
         return null;
     }
 
-    public function getAddress(): ?array
-    {
-        return [];
-    }
-
     public function getJobTitle(): ?string
     {
         return null;
@@ -58,7 +60,6 @@ abstract class Employee
             'email' => $this->getEmail(),
             'username' => $this->getUsername(),
             'password' => $this->getPassword(),
-            'address' => $this->getAddress(),
             'jobTitle' => $this->getJobTitle(),
             'gender' => $gender,
             'birthday' => $this->getBirthday(),
@@ -67,18 +68,28 @@ abstract class Employee
         return array_filter($payload);
     }
 
+    private function validateDate($date, $format = 'Y-m-d') {
+        $d = DateTime::createFromFormat($format, $date);
+        return $d && $d->format($format) === $date;
+    }
+
     public function validate(): string
     {
         if (empty($this->getFirstName())) {
-            return 'FIRST_NAME_REQUIRED';
+            return self::FIRST_NAME_REQUIRED;
         }
 
         if (empty($this->getLastName())) {
-            return 'LAST_NAME_REQUIRED';
+            return self::LAST_NAME_REQUIRED;
         }
 
         if (Gender::isValid($this->getGender()))  {
-            return 'GENDER_REQUIRED';
+            return self::GENDER_MISMATCH;
+        }
+
+        $d =$this->getBirthday();
+        if ($d != '' && !$this->validateDate($d)) {
+            return self::BIRTHDAY_MISMATCH;
         }
 
         return "";

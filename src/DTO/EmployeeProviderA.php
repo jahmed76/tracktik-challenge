@@ -78,8 +78,4 @@ class EmployeeProviderA extends Employee
     {
         return $this->data['birth_date'] ?? null;
     }
-
-    public function getAddress(): ?array {
-        return [];
-    }
 }

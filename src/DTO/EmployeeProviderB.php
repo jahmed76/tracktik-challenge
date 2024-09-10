@@ -44,11 +44,6 @@ class EmployeeProviderB extends Employee
         return $this->data['contact']['email'] ?? null;
     }
 
-    public function getAddress(): ?array
-    {
-        return $this->data['contact']['address'] ?? null;
-    }
-
     public function getJobTitle(): ?string
     {
         return $this->data['role'] ?? null;
@@ -72,8 +67,8 @@ class EmployeeProviderB extends Employee
 
     public function getBirthday(): ?string
     {
-        $dob = $this->data['dob'] ?? null;
-        if ($dob) {
+        $dob = $this->data['dob'] ?? [];
+        if ($dob && is_array($dob) && empty(array_diff_key(array_flip(['year', 'month','day']), $dob))) {
             return sprintf("%s-%s-%s", $dob['year'],  $dob['month'],  $dob['day']);
         }
 

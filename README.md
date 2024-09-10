@@ -24,6 +24,8 @@ TRACKTIK_REFRESH_TOKEN= #Initial refresh token from credentials.json file
 DATABASE_URL="postgresql://admin:root@host.docker.internal:15432/tracktik_db?serverVersion=16&charset=utf8"
 ```
 
+TRACKTIK_REFRESH_TOKEN is the initial refresh token, which is used to generate subsequent access tokens and refresh tokens.
+
 ### Step 1: Start the Docker Containers
 
 Run the following command to start the PHP application, PostgreSQL, and pgAdmin containers:

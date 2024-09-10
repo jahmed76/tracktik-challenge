@@ -30,27 +30,6 @@ class TrackTikService
             return new ApiResponse(400, false, $error);
         }
 
-        // $employeeData = [
-        //     "jobTitle" => "Assistant",
-        //     "region" => 123,
-        //     "employmentProfile" => 123,
-        //     "gender" => "M",
-        //     "age" => 123,
-        //     "birthday" => "2019-08-24",
-        //     "id" => 12345,
-        //     "customId" => "C123-A",
-        //     "firstName" => "John",
-        //     "lastName" => "Smith",
-        //     "name" => "Sample Name",
-        //     "primaryPhone" => "555-555-1234",
-        //     "secondaryPhone" => "555-555-4321",
-        //     "username" => "string",
-        //     "email" => "john.smith@myemail.com",
-        //     "tags" => [
-        //         "string"
-        //     ]
-
-        // ];
         $url = '/rest/v1/employees';
         $tokenResp = $this->authService->getAccessToken();
         if (!$tokenResp->isSuccess()) {
@@ -61,8 +40,6 @@ class TrackTikService
         $token = $data['access_token'];
 
         $data = $employee->prepare();
-
-        // return new ApiResponse(200, true, '', $employeeData);
         
         $response = $this->httpService->makeRequest('POST', $url, $data, $token);
         if (!$response->isSuccess()) {
